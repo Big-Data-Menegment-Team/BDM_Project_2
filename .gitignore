@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+.env
+
+# Spark/Iceberg
+# checkpoints/
+warehouse/
+
+# OS
+.DS_Store
