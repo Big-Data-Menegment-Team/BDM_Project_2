@@ -83,6 +83,8 @@ def main() -> None:
                         help="Kafka bootstrap server.")
     parser.add_argument("--rate",      type=float, default=5.0,
                         help="Events per second.")
+    parser.add_argument("--limit",     type=int, default=0,
+                        help="Stop after sending N events (0 = no limit).")
     parser.add_argument("--loop",      action="store_true",
                         help="Replay the file indefinitely (Ctrl-C to stop).")
     args = parser.parse_args()
@@ -152,6 +154,10 @@ def main() -> None:
                         f"PU={msg.get('PULocationID')}  DO={msg.get('DOLocationID')}  "
                         f"fare=${msg.get('fare_amount')}"
                     )
+
+                if args.limit and sent >= args.limit:
+                    print(f"\nReached limit of {args.limit} events.")
+                    raise KeyboardInterrupt
 
                 time.sleep(interval)
 

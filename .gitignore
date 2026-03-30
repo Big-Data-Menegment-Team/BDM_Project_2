@@ -7,7 +7,7 @@ venv/
 .env
 
 # Spark/Iceberg
-# checkpoints/
+checkpoints/
 warehouse/
 
 # OS
