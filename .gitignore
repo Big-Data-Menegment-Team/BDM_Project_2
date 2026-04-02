@@ -9,6 +9,8 @@ venv/
 # Spark/Iceberg
 checkpoints/
 warehouse/
+checkpoints_earliest/
+checkpoints_latest/
 
 # OS
 .DS_Store

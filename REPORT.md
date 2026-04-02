@@ -206,8 +206,18 @@ The `--reset` flag can be used to wipe everything (drop tables + delete checkpoi
 ---
 
 ## 6. Custom scenario
+**Earliest vs latest starting offset:** <br>
+The earliest stream is used when full historical ingestion is needed, e.g., when starting a new pipeline. <br>
+The latest stream is useful for continuously running pipelines where past data has already been processed. <br>
+The main difference is whether historical data or only new events should be read.
 
-_Explain and/or show how you solved the custom scenario from the GitHub issue._
+Our outcome: 
+| Bronze Table        | Rows Consumed |
+|--------------------|---------------|
+| bronze_earliest    | 500           |
+| bronze_latest      | 100           |
+See the next subsection for instructions to run the pipeline.
+
 
 ## 7. How to run
 
@@ -232,4 +242,17 @@ docker exec project2_jupyter python /home/jovyan/project/pipeline.py
 
 # Step 5: Verify data and check for duplicates
 docker exec project2_jupyter python /home/jovyan/project/verify_data.py
+
+# ---- Run our scenario ----
+# Run the bronze pipeline
+docker exec project2_jupyter python /home/jovyan/project/scenario.py
+# or with reset for a clean start: 
+# docker exec project2_jupyter python /home/jovyan/project/scenario.py --reset
+
+# Start the producer
+docker exec project2_jupyter python /home/jovyan/project/produce.py --limit 500
+
+# Produce more data for the 'latest' stream
+docker exec project2_jupyter python /home/jovyan/project/produce.py --limit 100
+
 ```
